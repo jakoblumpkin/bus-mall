@@ -1,0 +1,30 @@
+body {
+}
+
+p {
+  width: 50%;
+}
+
+main {
+  display: flex;
+}
+
+div img {
+  margin: 25px;
+}
+
+section {
+}
+
+#leftSection {
+  width: 1000px;
+}
+
+#listofresults {
+  list-style-type: none;
+  font-size: larger;
+}
+
+h1 {
+  text-align: center;
+}
