@@ -6,9 +6,12 @@ function Pictures(name, source, displayed, clicked){
     this.clicked=clicked;
 
     Pictures.all.push(this);
+
 }
 
 Pictures.all=[];
+
+
 
 
 
@@ -32,6 +35,15 @@ usb=new Pictures("usb", "img/usb.gif", 0, 0);
 watercan=new Pictures("watercan", "img/water-can.jpg", 0, 0);
 wineglass=new Pictures("wineglass", "img/wine-glass.jpg", 0, 0);
 
+function NonRepeat(num1, num2, num3){
+    this.num1=num1;
+    this.num2=num2;
+    this.num3=num3;
+    
+}
+
+
+let checkrepeat=new NonRepeat(0,0,0);
 
 
 function findPic(url){
@@ -49,7 +61,7 @@ function findPic(url){
 let buttonS=document.getElementById("buttonS");
 let btn = document.createElement("BUTTON");
 let counting=0;
-
+let number=0;
 
 
 function afterclick(event){
@@ -57,14 +69,41 @@ function afterclick(event){
     if (counting==25){
         let textnode = document.createTextNode("View Results");
         buttonS.appendChild(btn).appendChild(textnode);
+
+        firstImage.removeEventListener("click", afterclick);
+        secondImage.removeEventListener("click", afterclick);
+        thirdImage.removeEventListener("click", afterclick);
+
          
     }else{
     findPic(event.target.getAttribute('value'));
+   
+    
+    
+    let num1=findRandomRange(0, 18);
+    let num2=findRandomRange(0, 18);
+    let num3=findRandomRange(0, 18);
+
+    while((num1==num2) || (num2==num3 ) || (num3==num2) || (num3==num1)
+          || checkrepeat.num1==num1    
+          || checkrepeat.num2==num1  
+          ||  checkrepeat.num3==num1  
+          || checkrepeat.num1==num2   
+          || checkrepeat.num2==num2  
+          ||  checkrepeat.num3==num2
+          || checkrepeat.num1==num3 
+          || checkrepeat.num2==num3  
+          ||  checkrepeat.num3==num3 ){
+        num1=findRandomRange(0, 18);
+        num2=findRandomRange(0, 18);
+        num3=findRandomRange(0, 18);
+    }
+
+    checkrepeat.num1=num1;
+    checkrepeat.num2=num2;
+    checkrepeat.num2=num2;
 
 
-    num1=findRandomRange(0, 18);
-    num2=findRandomRange(0, 18);
-    num3=findRandomRange(0, 18);
 
     firstImage.setAttribute('value', Pictures.all[num1].source);
     firstImage.src=Pictures.all[num1].source;
@@ -81,8 +120,10 @@ function afterclick(event){
 
 
      
-
+ 
 }
+
+
 
 
 
@@ -94,6 +135,60 @@ secondImage.addEventListener('click', afterclick);
 
 let thirdImage=document.getElementById("thirdImage");
 thirdImage.addEventListener('click', afterclick);
+
+///list of Names
+let names=[];
+function listOfnames(){
+    for(let i=0; i<=18; i++){
+        names.push(Pictures.all[i].name);
+    }
+    return names;
+}
+let listOfclicked2=[];
+function listOfclicked(){
+    for(let i=0; i<=18; i++){
+        listOfclicked2.push(Pictures.all[i].clicked);
+    }
+    return listOfclicked2;
+}
+
+
+function callChart(){
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        // The data for our dataset
+        data: {
+            labels: listOfnames(),
+            datasets: [{
+                label: 'Voting Results',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [1,2,3,4,5,6,7,8,9,10],
+                data:  listOfclicked()
+            }]
+        },
+
+        // Configuration options go here
+        options: {}
+    });
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -112,4 +207,4 @@ function viewresults(){
     }
 }
 
-buttonS.addEventListener('click', viewresults);
+buttonS.addEventListener('click', callChart);
