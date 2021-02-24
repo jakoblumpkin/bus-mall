@@ -165,8 +165,9 @@ function callChart(){
             labels: listOfnames(),
             datasets: [{
                 label: 'Voting Results',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'white',
+                textColor: 'white',
+                borderColor: 'white',
                 data: [1,2,3,4,5,6,7,8,9,10],
                 data:  listOfclicked()
             }]
