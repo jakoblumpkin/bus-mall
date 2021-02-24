@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+     
     <link rel="stylesheet" href="css/app.css"/>
     </head>
     <body>
         <header>
            
             <h1>BusMall</h1>
+            <h2>Click your Favorite!</h2>
         </header>
+        <hr>
         <main>
             <div id="leftSection">
                 <ul id="listofresults">
@@ -21,7 +23,7 @@
                     <img  id="secondImage" src="img/banana.jpg"  value="img/banana.jpg" height="220px">
                     <img id="thirdImage" src="img/bathroom.jpg" value="img/bathroom.jpg" height="220px">
                 </div>
-                <div id="buttonS"></div>
+                <a href="#myChart"><div id="buttonS"></div></a>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
                     incididunt ut labore et dolore magna aliqua. Pretium fusce id velit 
@@ -36,9 +38,11 @@
                 </p>
             </section>
         </main>
+               <canvas id="myChart"></canvas>
         <footer>
 
         </footer>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="js/random.js"></script>    
     <script src="js/app.js"></script>
     </body>
