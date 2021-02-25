@@ -1,4 +1,4 @@
-
+"use strict";
 function Pictures(name, source, displayed, clicked){
     this.name=name;
     this.source=source;
@@ -15,25 +15,25 @@ Pictures.all=[];
 
 
 
-bag=new Pictures("bag", "img/bag.jpg", 1, 0);
-banana=new Pictures("banana", "img/banana.jpg", 1, 0);
-bathroom=new Pictures("bathroom", "img/bathroom.jpg", 1, 0);
-boots=new Pictures("boots", "img/boots.jpg", 0, 0);
-breakfast=new Pictures("breakfast", "img/breakfast.jpg", 0, 0);
-bubblegum=new Pictures("bubblegum", "img/bubblegum.jpg", 0, 0);
-chair=new Pictures("chair", "img/chair.jpg", 0, 0);
-cthulhu=new Pictures("cthulhu", "img/cthulhu.jpg", 0, 0);
-dogduck=new Pictures("dogduck", "img/dog-duck.jpg", 0, 0);
-dragon=new Pictures("dragon", "img/dragon.jpg", 0, 0);
-pen=new Pictures("pen", "img/pen.jpg", 0, 0);
-petsweep=new Pictures("petsweep", "img/pet-sweep.jpg", 0, 0);
-scissors=new Pictures("scissors", "img/scissors.jpg", 0, 0);
-shark=new Pictures("shark", "img/shark.jpg", 0, 0);
-tauntaun=new Pictures("tauntaun", "img/tauntaun.jpg", 0, 0);
-unicorn=new Pictures("unicorn", "img/unicorn.jpg", 0, 0);
-usb=new Pictures("usb", "img/usb.gif", 0, 0);
-watercan=new Pictures("watercan", "img/water-can.jpg", 0, 0);
-wineglass=new Pictures("wineglass", "img/wine-glass.jpg", 0, 0);
+let bag=new Pictures("bag", "img/bag.jpg", 1, 0);
+let banana=new Pictures("banana", "img/banana.jpg", 1, 0);
+let bathroom=new Pictures("bathroom", "img/bathroom.jpg", 1, 0);
+let boots=new Pictures("boots", "img/boots.jpg", 0, 0);
+let breakfast=new Pictures("breakfast", "img/breakfast.jpg", 0, 0);
+let bubblegum=new Pictures("bubblegum", "img/bubblegum.jpg", 0, 0);
+let chair=new Pictures("chair", "img/chair.jpg", 0, 0);
+let cthulhu=new Pictures("cthulhu", "img/cthulhu.jpg", 0, 0);
+let dogduck=new Pictures("dogduck", "img/dog-duck.jpg", 0, 0);
+let dragon=new Pictures("dragon", "img/dragon.jpg", 0, 0);
+let pen=new Pictures("pen", "img/pen.jpg", 0, 0);
+let petsweep=new Pictures("petsweep", "img/pet-sweep.jpg", 0, 0);
+let scissors=new Pictures("scissors", "img/scissors.jpg", 0, 0);
+let shark=new Pictures("shark", "img/shark.jpg", 0, 0);
+let tauntaun=new Pictures("tauntaun", "img/tauntaun.jpg", 0, 0);
+let unicorn=new Pictures("unicorn", "img/unicorn.jpg", 0, 0);
+let usb=new Pictures("usb", "img/usb.gif", 0, 0);
+let watercan=new Pictures("watercan", "img/water-can.jpg", 0, 0);
+let wineglass=new Pictures("wineglass", "img/wine-glass.jpg", 0, 0);
 
 function NonRepeat(num1, num2, num3){
     this.num1=num1;
@@ -45,16 +45,50 @@ function NonRepeat(num1, num2, num3){
 
 let checkrepeat=new NonRepeat(0,0,0);
 
+function addtoLocalser(value){
+    const JSONPic=JSON.stringify(value);
+    localStorage.setItem('Pic', JSONPic);
+}
+
+let javaV=null;
+ if (localStorage.length==0){
+    addtoLocalser(Pictures.all);
+    const localInfo=localStorage.getItem('Pic');
+    javaV=JSON.parse(localInfo);
+ }else{
+    const localInfo=localStorage.getItem('Pic');
+    javaV=JSON.parse(localInfo);
+ }
+
+
+
+let text1=document.getElementById("1text");
+let text2=document.getElementById("2text");
+let text3=document.getElementById("3text");
+
+text1.innerHTML="Votes: "+javaV[0].clicked;
+text2.innerHTML="Votes: "+javaV[1].clicked;
+text3.innerHTML="Votes: "+javaV[2].clicked;
+
+
+
+
+
+
+
 
 function findPic(url){
     for(let i=0; i<=18; i++){
-        if(Pictures.all[i].source==url){
-            Pictures.all[i].clicked+=1;
+        if(javaV[i].source==url){
+            javaV[i].clicked+=1;
         }
 
     }
-
+    addtoLocalser(javaV);
 }
+
+
+
 
 
 
@@ -107,15 +141,20 @@ function afterclick(event){
 
     firstImage.setAttribute('value', Pictures.all[num1].source);
     firstImage.src=Pictures.all[num1].source;
-    Pictures.all[num1].displayed+=1;
+    javaV[num1].displayed+=1;
+    text1.innerHTML="Votes: "+javaV[num1].clicked;
 
     secondImage.setAttribute('value', Pictures.all[num2].source);
     secondImage.src=Pictures.all[num2].source;
-    Pictures.all[num2].displayed+=1;
+    javaV[num2].displayed+=1;
+    text2.innerHTML="Votes: "+javaV[num2].clicked;
+
 
     thirdImage.setAttribute('value', Pictures.all[num3].source);
     thirdImage.src=Pictures.all[num3].source;
-    Pictures.all[num3].displayed+=1;
+    javaV[num3].displayed+=1;
+    addtoLocalser(javaV);
+    text3.innerHTML="Votes: "+javaV[num3].clicked;
     }
 
 
@@ -147,7 +186,7 @@ function listOfnames(){
 let listOfclicked2=[];
 function listOfclicked(){
     for(let i=0; i<=18; i++){
-        listOfclicked2.push(Pictures.all[i].clicked);
+        listOfclicked2.push(javaV[i].clicked);
     }
     return listOfclicked2;
 }
