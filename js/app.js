@@ -1,4 +1,5 @@
 "use strict";
+//constructor function for the pictures
 function Pictures(name, source, displayed, clicked){
     this.name=name;
     this.source=source;
@@ -14,7 +15,7 @@ Pictures.all=[];
 
 
 
-
+//all the items in constructor function
 let bag=new Pictures("bag", "img/bag.jpg", 1, 0);
 let banana=new Pictures("banana", "img/banana.jpg", 1, 0);
 let bathroom=new Pictures("bathroom", "img/bathroom.jpg", 1, 0);
@@ -42,14 +43,16 @@ function NonRepeat(num1, num2, num3){
     
 }
 
-
+//used to keep track of of previous us picture objects
 let checkrepeat=new NonRepeat(0,0,0);
 
+//function called when you want to add to localserver
 function addtoLocalser(value){
     const JSONPic=JSON.stringify(value);
     localStorage.setItem('Pic', JSONPic);
 }
 
+//checking if a user already have the data inlocal storage
 let javaV=null;
  if (localStorage.length==0){
     addtoLocalser(Pictures.all);
@@ -76,7 +79,7 @@ text3.innerHTML="Votes: "+javaV[2].clicked;
 
 
 
-
+//checked to see which pic use clicked then added to database
 function findPic(url){
     for(let i=0; i<=18; i++){
         if(javaV[i].source==url){
@@ -91,13 +94,15 @@ function findPic(url){
 
 
 
-
+//creates button for end of clickes
 let buttonS=document.getElementById("buttonS");
 let btn = document.createElement("BUTTON");
+//variable for counting how many times user clicked on a set of pics
 let counting=0;
 let number=0;
 
 
+//function for random picture pick after clicked
 function afterclick(event){
     counting+=1;
     if (counting==25){
@@ -113,11 +118,11 @@ function afterclick(event){
     findPic(event.target.getAttribute('value'));
    
     
-    
+//random number between 0-18    
     let num1=findRandomRange(0, 18);
     let num2=findRandomRange(0, 18);
     let num3=findRandomRange(0, 18);
-
+    //Checks if each ramdom picture was used previously or is used inthe same row
     while((num1==num2) || (num2==num3 ) || (num3==num2) || (num3==num1)
           || checkrepeat.num1==num1    
           || checkrepeat.num2==num1  
@@ -138,7 +143,7 @@ function afterclick(event){
     checkrepeat.num2=num2;
 
 
-
+// changes the source of pics for random pic include number of votes
     firstImage.setAttribute('value', Pictures.all[num1].source);
     firstImage.src=Pictures.all[num1].source;
     javaV[num1].displayed+=1;
@@ -165,7 +170,7 @@ function afterclick(event){
 
 
 
-
+//adds action when the a pic is clicked
 let firstImage=document.getElementById("firstImage");
 firstImage.addEventListener('click', afterclick);
 
@@ -191,7 +196,7 @@ function listOfclicked(){
     return listOfclicked2;
 }
 
-
+//chart that is displayed after view results is clicked
 function callChart(){
     var ctx = document.getElementById('myChart').getContext('2d');
     var chart = new Chart(ctx, {
@@ -236,7 +241,7 @@ function callChart(){
 
 
 let listofresults=document.getElementById("listofresults");
-
+//List that I didnt call because I used chart instead
 function viewresults(){
 
 
